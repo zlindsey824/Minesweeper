@@ -43,23 +43,17 @@ void Board::display(){
 }
 
 bool Board::checkTile(int row, int col){
-	std::cout << "checking tile" << std::endl;
-	if (playBoard[row][col] != ' '
+	if (row < 0 || row >= boardSize
 			|| col < 0 || col >= boardSize
-			|| row < 0 || row >= boardSize){
-		std::cout << "Return" << std::endl;
+			|| playBoard[row][col] != ' '){
 		return 0;
 	}
-		std::cout << row << " " << col << std::endl;
 	if (gameBoard[row][col] != '0'){
 		if (gameBoard[row][col] == 'X'){
-			std::cout << row << " " << col << " " << gameBoard[row][col] << std::endl;
 			// Allows a free first play that relocates mine to top left corner
 			if (first){
 				int r = 0, c = 0;
-				std::cout << "checking for X" << std::endl;
 				while (gameBoard[r][c] == 'X'){
-					std::cout << r << " " << c << std::endl;
 					c++;
 					if (c >= boardSize){
 						r++;
@@ -73,35 +67,34 @@ bool Board::checkTile(int row, int col){
 			// Otherwise, end game if mine is clicked
 			else{
 				revealMines();
+				std::cout << "You lost." << std::endl;
 				return 1;
 			}
 
 		}
-		std::cout << row << " " << col << " " << gameBoard[row][col] << std::endl;
 		playBoard[row][col] = gameBoard[row][col];
 		first = false;
 		return checkForWin();
 	}
 	else{
-		std::cout << row << " " << col << " " << gameBoard[row][col] << std::endl;
 		playBoard[row][col] = gameBoard[row][col];
 		first = false;
 	}
-	std::cout << "Checking UL" << std::endl;
+	//Checking UL
 	checkTile(row-1, col-1);
-	std::cout << "Checking UM" << std::endl;
+	//Checking UM
 	checkTile(row-1, col);
-	std::cout << "Checking UR" << std::endl;
+	//Checking UR
 	checkTile(row-1, col+1);
-	std::cout << "Checking MR" << std::endl;
+	//Checking MR
 	checkTile(row, col+1);
-	std::cout << "Checking LR" << std::endl;
-	//checkTile(row+1, col+1);
-	std::cout << "Checking LM" << std::endl;
+	//Checking LR
+	checkTile(row+1, col+1);
+	//Checking LM
 	checkTile(row+1, col);
-	std::cout << "Checking LL" << std::endl;
+	//Checking LL
 	checkTile(row+1, col-1);
-	std::cout << "Checking ML" << std::endl;
+	//Checking ML
 	checkTile(row, col-1);
 	return 0;
 }
@@ -128,6 +121,7 @@ bool Board::checkForWin(){
 			}
 		}
 	}
+	std::cout << "You win!!!" << std::endl;
 	return 1;
 }
 
