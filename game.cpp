@@ -5,12 +5,13 @@
 
 int main(){
 
-	Board game(10,15);
+	Board game(3,2);
 	char type;
 	int row,column;
-	int end = 1;
+	int end = 0;
+	std::cout << "Welcome to the game of Minesweeper!" << std::endl;
 
-	while (end){
+	while (!end){
 		game.display();
 		if (!first){
 			std::cout << "Would you like to (c)heck or (f)lag a tile?" << std::endl;
@@ -25,14 +26,14 @@ int main(){
 			std::cout << "Column: ";
 			std::cin >> column;
 			if (row < 0 || column < 0)
-				end = 0;
+				end = true;
 			else{
 				if (type == 'c')
 					end = game.checkTile(row, column);
 				else if (type == 'f')
 					game.flagTile(row, column);
 
-				if (!end) game.display();
+				if (end) game.display();
 				if (first) first = false;
 			}
 		}

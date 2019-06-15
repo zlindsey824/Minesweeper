@@ -9,6 +9,7 @@ public:
 	void display();
 	bool checkTile(int row, int col);
 	bool flagTile(int row, int col);
+	bool checkForWin();
 
 private:
 	void setup();
@@ -18,6 +19,7 @@ private:
 
 	int boardSize;
 	int numOfMines;
+	int numOfFlags;
 	char** gameBoard;
 	char** playBoard;
 };
